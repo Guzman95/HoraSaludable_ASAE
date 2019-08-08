@@ -1,0 +1,7 @@
+body{
+	height: 900px;
+	width: 300px;
+	/*background: url("../img/imagenes/body-bkg.png")  0 0 no-repeat;*/
+	background: url('Users/jymon/OneDrive/Escritorio/ASAE/moduloEstadistica/src/main/webapp/resources/img/imagenes/body-bkg.png');	
+		
+}

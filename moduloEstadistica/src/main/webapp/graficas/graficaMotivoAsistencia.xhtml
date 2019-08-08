@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<ui:composition template="../plantilla/frontEndAdministrador.xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="titulo">Grafica Motivos</ui:define>
+
+	<ui:define name="contenidoForm">
+		<h:outputStylesheet name="charts/charts.css" library="primefaces" />
+		<h:outputScript name="charts/charts.js" library="primefaces" />
+		<h:outputStylesheet name="./css/styleForms.css" />
+
+		<script type="text/javascript">
+			function habilitar() {
+				document.getElementById('fecha').checked = false;
+				document.getElementById('rango').checked = "checked";
+				document.getElementById('anio').disabled = true;
+				document.getElementById('periodo').disabled = true;
+				document.getElementById('mes').disabled = true;
+				document.getElementById('datepicker').disabled = false;
+				document.getElementById('datepicker2').disabled = false;
+				document.getElementById('rad1').disabled = true;
+				document.getElementById('rad2').disabled = true;
+			}
+			function deshabilitar() {
+				document.getElementById('fecha').checked = "checked";
+				document.getElementById('rango').checked = false;
+				document.getElementById('anio').disabled = false;
+				document.getElementById('periodo').disabled = false;
+				document.getElementById('mes').disabled = true;
+				document.getElementById('datepicker').disabled = true;
+				document.getElementById('datepicker2').disabled = true;
+				document.getElementById('rad1').disabled = false;
+				document.getElementById('rad2').disabled = false;
+			}
+		</script>
+
+		<script>
+			$(function() {
+				$.datepicker.setDefaults($.datepicker.regional["es"]);
+				$("#datepicker").datepicker({
+					firstDay : 1
+				});
+				$("#datepicker2").datepicker({
+					firstDay : 1
+				});
+			});
+		</script>
+		<script>
+			function habilitarRad() {
+				document.getElementById('periodo').disabled = true;
+				document.getElementById('mes').disabled = false;
+				document.getElementById('rad2').checked = "checked";
+				document.getElementById('rad1').checked = false;
+			}
+			function deshabilitarRad() {
+				document.getElementById('periodo').disabled = false;
+				document.getElementById('mes').disabled = true;
+				document.getElementById('rad2').checked = false;
+				document.getElementById('rad1').checked = "checked";
+			}
+		</script>
+
+		<h2>GRAFICO MOTIVOS</h2>
+		<h:form> 
+       		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       		Seleccionar Genero:
+ 			<h:selectOneMenu name="genero" id="genero" value="#{}">
+				<f:selectItem itemValue="M" itemLabel="MASCULINO" />
+				<f:selectItem itemValue="F" itemLabel="FEMENINO" />
+				<f:selectItem itemValue="ambos" itemLabel="AMBOS" />
+			</h:selectOneMenu>
+       		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       		Seleccionar Cargo:
+ 			  <h:selectOneMenu name="cargo" id="cargo" disabled="false">
+				<f:selectItem itemValue="docente" itemLabel="DOCENTE" />
+				<f:selectItem itemValue="administrativo" itemLabel="ADMINISTRATIVO" />
+				<f:selectItem itemValue="estudiante" itemLabel="ESTUDIANTE" />
+				<f:selectItem itemValue="DOCADM" itemLabel="DOCENTE - ADMIN" />
+				<f:selectItem itemValue="DOCEST" itemLabel="DOCENTE - ESTUDIANTE" />
+				<f:selectItem itemValue="ADMINEST" itemLabel="ESTUDIANTE - ADMIN" />
+				<f:selectItem itemValue="todos" itemLabel="TODOS" />
+			</h:selectOneMenu>
+
+			<h:commandButton value="BUSCAR" action="home.xhtml" />
+		</h:form>
+	</ui:define>
+
+	<ui:define name="contenidoGrafica">
+		<div id="lienzoGrafica">
+			<!--  <h:form>
+				<h:panelGrid columns="2" cellpadding="5" style="margin: 0 auto;">
+					<p:pieChart id="grafica" rendered="true" model="#{}"
+						style="height:300px; width: 600px;" widgetVar="chart" />
+				</h:panelGrid>
+
+			</h:form>-->
+		</div>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,118 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<ui:composition template="./plantilla/frontEndAdministrador.xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="titulo">GraficaHome</ui:define>
+
+	<ui:define name="contenidoForm">
+		<h:outputStylesheet name="charts/charts.css" library="primefaces" />
+		<h:outputScript name="charts/charts.js" library="primefaces" />
+		<h:outputStylesheet name="./css/styleForms.css" />
+
+
+		
+		<h2>GRAFICO ASISTENCIA</h2>
+		<hr />
+
+		<h:form id="formMain">
+		
+			 <p:growl id="growl" showDetail="true" sticky="true" />  
+			<p>
+				<h:outputText value= "Cedula:" />
+				<p:inputText  id="focus" title="Ingrese cedula del estudiante o administrativo"  type="text"
+					value="#{detalleasistenciaController.objdetalleasistencia.cedula}"
+					name="nombre" />
+				<p:tooltip id="tooltipfocus" for="focus" showEvent="focus" hideEvent="blur"/>
+			</p>
+
+			<p>
+				<p:selectOneRadio id="console" value="#{detalleasistenciaController.objdetalleasistencia.radio}" unselectable="true" onclick="disabledGeneral()">
+           			<f:selectItem itemLabel="Fecha" itemValue="Fecha" />
+           			<f:selectItem itemLabel="Rango" itemValue="Rango" />
+       			</p:selectOneRadio>
+				&nbsp;&nbsp; Seleccionar año:
+				<h:selectOneMenu name="anio" id="anio"
+					value="#{detalleasistenciaController.objdetalleasistencia.datanio}"
+					widgetVar="varAnio">
+					<f:selectItem itemValue="2016" itemLabel="2016" />
+					<f:selectItem itemValue="2017" itemLabel="2017" />
+					<f:selectItem itemValue="2018" itemLabel="2018" />
+					<f:selectItem itemValue="2019" itemLabel="2019" />
+				</h:selectOneMenu>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+					type="radio" id="periodo" name="findInto"
+					onchange="deshabilitarRad()" checked="checked" /> Seleccionar
+				Periodo:
+				<h:selectOneMenu name="periodoid" id="periodoid"
+					value="#{detalleasistenciaController.objdetalleasistencia.periodoAcademico}"
+					checked="true">
+					<f:selectItem itemValue="1" itemLabel="I" />
+					<f:selectItem itemValue="2" itemLabel="II" />
+				</h:selectOneMenu>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+					type="radio" id="radioMes" name="findInto" value="rad2"
+					onclick="habilitarRad()" /> Seleccionar Mes:
+				<h:selectOneMenu name="mes" id="mes"
+					value="#{detalleasistenciaController.objdetalleasistencia.mesConsulta}"
+					>
+					<f:selectItem itemValue="00" itemLabel="Seleccione" />
+					<f:selectItem itemValue="01" itemLabel="Enero" />
+					<f:selectItem itemValue="02" itemLabel="Febrero" />
+					<f:selectItem itemValue="03" itemLabel="Marzo" />
+					<f:selectItem itemValue="04" itemLabel="Abril" />
+					<f:selectItem itemValue="05" itemLabel="Mayo" />
+					<f:selectItem itemValue="06" itemLabel="Junio" />
+					<f:selectItem itemValue="07" itemLabel="Julio" />
+					<f:selectItem itemValue="08" itemLabel="Agosto" />
+					<f:selectItem itemValue="09" itemLabel="Septiembre" />
+					<f:selectItem itemValue="10" itemLabel="Octubre" />
+					<f:selectItem itemValue="11" itemLabel="Noviembre" />
+					<f:selectItem itemValue="12" itemLabel="Diciembre" />
+				</h:selectOneMenu>
+			</p>
+			
+			<p>
+				 Desde: <h:inputText
+					type="text" id="datepicker" value="#{detalleasistenciaController.objdetalleasistencia.fecInicio}">
+					<f:convertDateTime pattern = "yyyy/mm/dd" />
+					</h:inputText>
+					&nbsp;&nbsp;&nbsp;&nbsp;Hasta:
+				<h:inputText type="text" id="datepicker2" value="#{detalleasistenciaController.objdetalleasistencia.fecFin}">
+				<f:convertDateTime pattern = "yyyy/mm/dd" />
+				</h:inputText>
+				
+				
+			</p>
+
+			<p:commandButton value="BUSCAR"
+				actionListener="#{detalleasistenciaController.findListByHalfYearEnviarVista}"  />
+			<p>
+				<h4>A continuacion se presenta la grafica donde se refleja la
+					asistencia del usuario al programa hora saludable</h4>
+			</p>
+
+		</h:form>
+	</ui:define>
+
+
+
+	<ui:define name="contenidoGrafica">
+		<div id="lienzoGrafica">
+			<h:form>
+				<h:panelGrid columns="2" cellpadding="5" style="margin: 0 auto;">
+					<p:barChart id="grafica" type="bar"
+						model="#{detalleasistenciaController.asistenciaPersonal}"
+						style="height:300px; width: 600px;" widgetVar="chart" />
+				</h:panelGrid>
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
