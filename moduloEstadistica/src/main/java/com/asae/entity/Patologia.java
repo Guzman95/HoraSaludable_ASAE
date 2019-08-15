@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({ 
 @NamedQuery(name= "Patologia.findByGender", query= "SELECT p.nombre,COUNT(p.nombre) FROM Patologia p JOIN p.usuario pe WHERE pe.usugenero = :gender GROUP BY p.nombre"),
-@NamedQuery(name = "Patologia.findByPosition",query = "SELECT p.nombre FROM Patologia p JOIN p.usuario pe WHERE pe.cargo.carid = :position GROUP BY p.nombre"),
-@NamedQuery(name="Patologia.findCount", query="SELECT p.nombre, COUNT(p.nombre) FROM Patologia p GROUP BY p.nombre"),
+@NamedQuery(name = "Patologia.findByPosition",query = "SELECT p.nombre, COUNT(p.nombre) as Cantidad FROM Patologia p JOIN p.usuario pe WHERE pe.cargo.carid = :position GROUP BY p.nombre"),
+@NamedQuery(name="Patologia.findByCount", query="SELECT p.nombre, COUNT(p.nombre) FROM Patologia p GROUP BY p.nombre"),
 @NamedQuery(name="Patologia.findOneGarder", query="SELECT p.nombre, COUNT(p.nombre) FROM Patologia p JOIN p.usuario pe WHERE pe.usuario.usugenero = :gender AND pe.cargo.carid = :positios GROUP BY p.nombre"),
 @NamedQuery(name="Patologia.findAll", query="SELECT p FROM Patologia p")
 })

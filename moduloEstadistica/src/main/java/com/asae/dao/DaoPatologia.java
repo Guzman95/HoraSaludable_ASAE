@@ -15,7 +15,7 @@ public class DaoPatologia implements IDaoPatologia {
 	public List<Object[]> findByCount(EntityManager em) {
 		List<Object[]> listaRetornada = new ArrayList<Object[]>();
 		TypedQuery<Object[]> query = null;
-		query = em.createNamedQuery("patologiaController.findByGender", Object[].class);
+		query = em.createNamedQuery("Patologia.findByCount", Object[].class);
 
 		listaRetornada = query.getResultList();
 		return listaRetornada;
@@ -26,7 +26,7 @@ public class DaoPatologia implements IDaoPatologia {
 	public List<Object[]> findByGender(EntityManager em, String gender) {
 		List<Object[]> listaRetornada = new ArrayList<Object[]>();
 		TypedQuery<Object[]> query = null;
-		query = em.createNamedQuery("patologiaController.findByGender", Object[].class);
+		query = em.createNamedQuery("Patologia.findByGender", Object[].class);
 
 		query.setParameter("gender", gender);
 
@@ -38,7 +38,7 @@ public class DaoPatologia implements IDaoPatologia {
 	public List<Object[]> findByPosition(EntityManager em, String position) {
 		List<Object[]> listaRetornada = new ArrayList<Object[]>();
 		TypedQuery<Object[]> query = null;
-		query = em.createNamedQuery("patologiaController.findByPosition", Object[].class);
+		query = em.createNamedQuery("Patologia.findByPosition", Object[].class);
 
 		query.setParameter("position", position);
 

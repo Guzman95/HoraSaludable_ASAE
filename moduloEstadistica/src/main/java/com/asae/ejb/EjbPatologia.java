@@ -83,7 +83,6 @@ public class EjbPatologia implements IEjbPatologia {
 			IDaoPatologia iDaoPatologia = new DaoPatologia();
 			et = em.getTransaction();
 			et.begin();
-			//@Transactional(dontRollbackOn=MyException.class, noRollbackFor=MyException2.class);
 			listaRetornada = iDaoPatologia.findByPosition(em, position);
 
 			for (Object[] obj : listaRetornada) {

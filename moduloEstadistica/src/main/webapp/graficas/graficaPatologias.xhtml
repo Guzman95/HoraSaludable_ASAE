@@ -32,10 +32,10 @@
 				<f:selectItem itemValue="1" itemLabel="DOCENTE" />
 				<f:selectItem itemValue="2" itemLabel="ADMINISTRATIVO" />
 				<f:selectItem itemValue="3" itemLabel="ESTUDIANTE" />
-				<f:selectItem itemValue="4" itemLabel="DOCENTE - ADMIN" />
-				<f:selectItem itemValue="5" itemLabel="DOCENTE - ESTUDIANTE" />
-				<f:selectItem itemValue="6" itemLabel="ESTUDIANTE - ADMIN" />
-				<f:selectItem itemValue="7" itemLabel="TODOS" />
+				<f:selectItem itemValue="1-2" itemLabel="DOCENTE - ADMIN" />
+				<f:selectItem itemValue="1-3" itemLabel="DOCENTE - ESTUDIANTE" />
+				<f:selectItem itemValue="3-2" itemLabel="ESTUDIANTE - ADMIN" />
+				<f:selectItem itemValue="0" itemLabel="TODOS" />
 
 			</h:selectOneMenu>
 			<h:commandButton value="BUSCAR" action="#{patologiaController.ConsultarPatologia}" />

@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -28,6 +27,7 @@ public class patologiaController {
 	@ManagedProperty(value = "#{objpatologia}")
 	private DTOPatologia objpatologia;
 	private ArrayList<DTOPatologia> listaPatologia;
+	private ArrayList<DTOPatologia> listaPatologiaAux;
 	private static final String EJBGestionPatologia_SESSION_KEY = "EJBSesionPatologia";
 	private IEjbPatologia iEjbPatologia;
 
@@ -38,8 +38,23 @@ public class patologiaController {
 		System.out.println("creando ejb Patologia");
 		consultarReferenciaEJB();
 		listaPatologia = new ArrayList<DTOPatologia>();
+		listaPatologiaAux = new ArrayList<DTOPatologia>();
 		graficoPatologia = new PieChartModel();
 	}
+
+	
+	
+	public ArrayList<DTOPatologia> getListaPatologiaAux() {
+		return listaPatologiaAux;
+	}
+
+
+
+	public void setListaPatologiaAux(ArrayList<DTOPatologia> listaPatologiaAux) {
+		this.listaPatologiaAux = listaPatologiaAux;
+	}
+
+
 
 	public DTOPatologia getObjpatologia() {
 		return objpatologia;
@@ -59,25 +74,30 @@ public class patologiaController {
 
 	public String ConsultarPatologia() {
 
-		if (this.objpatologia.getGenero() != null) {
+		if (this.objpatologia.getGenero().equals("A")) {
 
-			if (this.objpatologia.getCargo() == 1 || this.objpatologia.getCargo() == 2
-					|| this.objpatologia.getCargo() == 3) {
-				this.listaPatologia = findByPosition();
-			} else if (this.objpatologia.getCargo() == 4) {
-				this.listaPatologia = findByPosition();
-				ArrayList<DTOPatologia> listaDocente = findByPosition();
-			} else if (this.objpatologia.getCargo() == 5) {
-				this.listaPatologia = findByPosition();
-			} else if (this.objpatologia.getCargo() == 6) {
-				this.listaPatologia = findByPosition();
-			} else if (this.objpatologia.getCargo() == 7) {
-				this.listaPatologia = findByPosition();
+			if (this.objpatologia.getCargo().equals("1")  || this.objpatologia.getCargo().equals("2") || this.objpatologia.getCargo().equals("3")) {
+				this.listaPatologia = findByPosition(this.objpatologia.getCargo());
+			} else if (this.objpatologia.getCargo().equals("1-2")  || this.objpatologia.getCargo().equals("1-3") || this.objpatologia.getCargo().equals("3-2")){
+				String[] cargoId=this.objpatologia.getCargo().split("-");
+				this.listaPatologia = findByPosition(cargoId[0]);
+				this.listaPatologiaAux = findByPosition(cargoId[1]);
+			}else {
+				this.listaPatologia = findCount();
 			}
 
 		} else {
-			this.listaPatologia = findByGender();
+			if (this.objpatologia.getCargo().equals("1")  || this.objpatologia.getCargo().equals("2") || this.objpatologia.getCargo().equals("3")) {
+				this.listaPatologia = findOneGarder(this.objpatologia.getCargo());
+			} else if (this.objpatologia.getCargo().equals("1-2")  || this.objpatologia.getCargo().equals("1-3") || this.objpatologia.getCargo().equals("3-2")){
+				String[] cargoId=this.objpatologia.getCargo().split("-");
+				this.listaPatologia = findOneGarder(cargoId[0]);
+				this.listaPatologiaAux = findOneGarder(cargoId[1]);
+			}else {
+				this.listaPatologia = findByGender();
+			}
 		}
+		initPieModel();
 		return "graficaPatologias";
 	}
 
@@ -88,11 +108,12 @@ public class patologiaController {
 		return this.listaPatologia;
 	}
 
-	public ArrayList<DTOPatologia> findByPosition() {
+	public ArrayList<DTOPatologia> findByPosition(String Cargo) {
+		ArrayList<DTOPatologia> listarRetornada=new ArrayList<DTOPatologia>();
 		System.out.println("Consultando Patologias por Cargo y Genero");
-		this.listaPatologia = (ArrayList<DTOPatologia>) iEjbPatologia.findByPosition(this.objpatologia.getCargo() + "");
+		listarRetornada = (ArrayList<DTOPatologia>) iEjbPatologia.findByPosition(Cargo);
 		System.out.println("El tamaño de la lista de asistencias es: " + listaPatologia.size());
-		return this.listaPatologia;
+		return listarRetornada;
 	}
 
 	public ArrayList<DTOPatologia> findCount() {
@@ -102,10 +123,10 @@ public class patologiaController {
 		return this.listaPatologia;
 	}
 
-	public ArrayList<DTOPatologia> findOneGarder() {
+	public ArrayList<DTOPatologia> findOneGarder(String Cargo) {
 		System.out.println("Consultando Patologias por Cargo y Genero");
 		this.listaPatologia = (ArrayList<DTOPatologia>) iEjbPatologia.findOneGarder(this.objpatologia.getGenero(),
-				this.objpatologia.getCargo() + "");
+				Cargo);
 		System.out.println("El tamaño de la lista de asistencias es: " + listaPatologia.size());
 		return this.listaPatologia;
 	}

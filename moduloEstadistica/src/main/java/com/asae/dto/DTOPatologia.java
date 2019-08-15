@@ -14,13 +14,13 @@ public class DTOPatologia {
 	private int usuid;
 	private long contador;
 	private String genero;
-	private int cargo;
+	private String cargo;
 	
-	public int getCargo() {
+	public String getCargo() {
 		return cargo;
 	}
 
-	public void setCargo(int cargo) {
+	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
 
